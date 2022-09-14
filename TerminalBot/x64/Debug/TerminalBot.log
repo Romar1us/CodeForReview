@@ -1,0 +1,9 @@
+﻿  Sorting.cpp
+C:\Users\Roman\Projects\TerminalBot\TerminalBot\Sorting.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Source.cpp
+C:\Users\Roman\Projects\TerminalBot\TerminalBot\Source.cpp(18,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Roman\Projects\TerminalBot\TerminalBot\Source.cpp(65,3): error C2561: 'Login': function must return a value
+C:\Users\Roman\Projects\TerminalBot\TerminalBot\Source.cpp(47): message : see declaration of 'Login'
+C:\Users\Roman\Projects\TerminalBot\TerminalBot\Source.cpp(120,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  Source1.cpp
+  Generating Code...
