@@ -4,21 +4,72 @@
 #include <ctime>
 #include <fstream>
 
+#define SIDE
+#define TEST
+
+class Account;
+
 using namespace std;
 
-string PasswordEncryption(string UserName, string Password);
-string Login();
-void Settings();
+void Login(Account *User);
 string FlipCoin();
-void Settings();
 void CreateNewAccount();
 
-void Settings()
+class Account
 {
-	srand(time(0));
-}
+private:
 
-void CreateNewAccount()
+	
+	
+	string UserName;
+	string Password;
+
+	void OpenFile()
+	{
+		Accounts.open("AccountsAndPassword.dat", ios::out | ios::in);
+	}
+	
+public:
+
+	bool IsFileExists()
+	{
+		OpenFile();
+		return Accounts.is_open();
+	}
+
+	void CreateSaveFile()
+	{
+		ofstream Accounts("AccountsAndPassword.dat");
+	}
+
+	string GetUserName()
+	{
+		return UserName;
+	}
+
+	void SetUserName(string NameValue)
+	{
+		UserName = NameValue;
+	}
+
+	string GetPassword()
+	{
+		return Password;
+	}
+
+	void SetPassword(string PasswordValue)
+	{
+		Password = PasswordValue;
+	}
+	fstream Accounts;
+
+	string PasswordEncryption(string UserName, string Password)
+	{
+		return UserName + "&" + Password;
+	}
+};
+
+void CreateNewAccount(Account* User)
 {
 	fstream Accounts;
 	Accounts.open("AccountsAndPassword.dat", ios::out | ios::in | ios::app);
@@ -38,67 +89,50 @@ void CreateNewAccount()
 
 	if (PassWordConfirmation == PassWord)
 	{
-		Accounts << PasswordEncryption(UserName, PassWord) << endl;
+		Accounts << User->PasswordEncryption(UserName, PassWord) << endl;
 	}
-
-	Login();
 }
 
-string Login()
+void Login(Account* User)
 {
-	fstream Accounts;
-	Accounts.open("AccountsAndPassword.dat", ios::out | ios::in | ios::app);
-	
-	string UserName;
-	string PassWord;
+	string Password;
 	string Command;
-	string EncryptedPassword;
 	string DataPassword;
 
 	cout << "Hello, type in your Username -> " << endl;
 	cout << "Or if u wanna to create new Account type in: New -> ";
 	cin >> Command;
 
-	if (!Accounts.is_open())
-	{
-		cout << "Fatal Error" << endl;
-		return ;
-	}
-
 
 	if (Command == "New")
 	{
-		CreateNewAccount();
+		CreateNewAccount(User);
 	}
-	UserName = Command;
+
 	cout << "Type in your password -> ";
-	cin >> PassWord;
-	EncryptedPassword = PasswordEncryption(UserName, PassWord);
+	cin >> Password;
 
-	cout << Accounts.gcount() << endl;
-
-
-	while (getline(Accounts, DataPassword))
+	while (getline(User->Accounts, DataPassword))
 	{
-		cout << DataPassword << endl;
-		if (EncryptedPassword == DataPassword)
+		TEST cout << DataPassword << endl;
+		if (User->PasswordEncryption(Command, Password) == DataPassword)
 		{
 			cout << "Success. Welcome back" << endl;
-			cout << DataPassword << endl;
-			return UserName;
+			User->SetUserName(Command);
+			User->SetPassword(Password);
+			return;
 		}
 	}
 	cout << "Wrong User Name or Password\nTry Again" << endl;
-	Login();	
 }
 
-void MainMenu()
+SIDE void MainMenu()
 {
 	cout << "Choose option" << endl;
 
 }
 
-string FlipCoin()
+SIDE string FlipCoin()
 {
 	string CoinSide;
 	int RandomNumber = rand() % 2;
@@ -107,18 +141,21 @@ string FlipCoin()
 	return CoinSide;
 }
 
-string PasswordEncryption(string UserName, string Password)
+void Settings(Account *User)
 {
-	string EncryptedPassword;
+	srand(time(0));
 
-	EncryptedPassword = UserName + "&" + Password;
-
-	return EncryptedPassword;
+	if (!User->IsFileExists())//Checks does file exists and in the same time opens this file
+	{
+		User->CreateSaveFile();//If file doesn't exists creates new 
+	}
 }
 
 void main()
 {	
-	string UserName = Login();
+	Account User;
+	Settings(&User);
+	Login(&User);
 
 	FlipCoin();
 }
