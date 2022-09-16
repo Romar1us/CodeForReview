@@ -11,8 +11,6 @@ class Account;
 
 using namespace std;
 
-string FlipCoin();
-void CreateNewAccount();
 
 class Account
 {
@@ -65,7 +63,6 @@ public:
 		return UserName + "&" + Password;
 	}
 
-
 	void CreateNewAccount()
 	{
 		string PassWordConfirmation;
@@ -116,22 +113,6 @@ public:
 	}
 };
 
-
-SIDE void MainMenu()
-{
-	cout << "Choose option" << endl;
-
-}
-
-SIDE string FlipCoin()
-{
-	string CoinSide;
-	int RandomNumber = rand() % 2;
-
-	(RandomNumber == 0 ? CoinSide = "Orel" : CoinSide = "Reshka");
-	return CoinSide;
-}
-
 void Settings(Account *User)
 {
 	srand(time(0));
@@ -150,5 +131,4 @@ void main()
 
 	cout << User.GetUserName() << endl;
 
-	FlipCoin();
 }
