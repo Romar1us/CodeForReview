@@ -11,7 +11,6 @@ class Account;
 
 using namespace std;
 
-void Login(Account *User);
 string FlipCoin();
 void CreateNewAccount();
 
@@ -19,10 +18,9 @@ class Account
 {
 private:
 
-	
-	
 	string UserName;
 	string Password;
+	fstream Accounts;
 
 	void OpenFile()
 	{
@@ -61,70 +59,63 @@ public:
 	{
 		Password = PasswordValue;
 	}
-	fstream Accounts;
-
+	
 	string PasswordEncryption(string UserName, string Password)
 	{
 		return UserName + "&" + Password;
 	}
-};
 
-void CreateNewAccount(Account* User)
-{
-	fstream Accounts;
-	Accounts.open("AccountsAndPassword.dat", ios::out | ios::in | ios::app);
 
-	string UserName;
-	string PassWord;
-	string PassWordConfirmation;
-
-	cout << "Type in your Username -> ";
-	cin >> UserName;
-	
-	cout << "\nType in your Password -> ";
-	cin >> PassWord;
-
-	cout << "\nConfirm your Password -> ";
-	cin >> PassWordConfirmation;
-
-	if (PassWordConfirmation == PassWord)
+	void CreateNewAccount()
 	{
-		Accounts << User->PasswordEncryption(UserName, PassWord) << endl;
-	}
-}
+		string PassWordConfirmation;
 
-void Login(Account* User)
-{
-	string Password;
-	string Command;
-	string DataPassword;
+		cout << "Type in your Username -> ";
+		cin >> UserName;
 
-	cout << "Hello, type in your Username -> " << endl;
-	cout << "Or if u wanna to create new Account type in: New -> ";
-	cin >> Command;
+		cout << "\nType in your Password -> ";
+		cin >> Password;
 
+		cout << "\nConfirm your Password -> ";
+		cin >> PassWordConfirmation;
 
-	if (Command == "New")
-	{
-		CreateNewAccount(User);
-	}
-
-	cout << "Type in your password -> ";
-	cin >> Password;
-
-	while (getline(User->Accounts, DataPassword))
-	{
-		TEST cout << DataPassword << endl;
-		if (User->PasswordEncryption(Command, Password) == DataPassword)
+		if (PassWordConfirmation == Password)
 		{
-			cout << "Success. Welcome back" << endl;
-			User->SetUserName(Command);
-			User->SetPassword(Password);
-			return;
+			Accounts << PasswordEncryption(UserName, Password) << endl;
 		}
 	}
-	cout << "Wrong User Name or Password\nTry Again" << endl;
-}
+
+	void Login()
+	{
+		string Command;
+		string DataPassword;
+
+		cout << "Hello, type in your Username -> " << endl;
+		cout << "Or if u wanna to create new Account type in: New -> ";
+		cin >> Command;
+
+		if (Command == "New")
+		{
+			CreateNewAccount();
+		}
+
+		cout << "Type in your password -> ";
+		cin >> Password;
+
+		while (getline(Accounts, DataPassword))
+		{
+			if (PasswordEncryption(Command, Password) == DataPassword)
+			{
+				cout << "Success. Welcome back" << endl;
+				SetUserName(Command);
+				SetPassword(Password);
+				return;
+			}
+		}
+		cout << "Wrong User Name or Password\nTry Again" << endl;
+	}
+};
+
 
 SIDE void MainMenu()
 {
@@ -155,7 +146,9 @@ void main()
 {	
 	Account User;
 	Settings(&User);
-	Login(&User);
+	User.Login();
+
+	cout << User.GetUserName() << endl;
 
 	FlipCoin();
 }
