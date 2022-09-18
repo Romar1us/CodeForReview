@@ -43,9 +43,9 @@ public:
 		return UserName;
 	}
 
-	void SetUserName(string NameValue)
+	void SetUserName(string UserName)
 	{
-		UserName = NameValue;
+		this->UserName = UserName;
 	}
 
 	string GetPassword()
@@ -53,9 +53,9 @@ public:
 		return Password;
 	}
 
-	void SetPassword(string PasswordValue)
+	void SetPassword(string Password)
 	{
-		Password = PasswordValue;
+		this->Password = Password;
 	}
 	
 	string PasswordEncryption(string UserName, string Password)
