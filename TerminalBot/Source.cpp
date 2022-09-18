@@ -24,12 +24,53 @@ private:
 	{
 		Accounts.open("AccountsAndPassword.dat", ios::out | ios::in);
 	}
-	
+
+	void Login(string UserName, string Password)
+	{
+		string DataPassword;
+
+		while (getline(Accounts, DataPassword))
+		{
+			if (PasswordEncryption(UserName, Password) == DataPassword)
+			{
+				cout << "Success. Welcome back" << endl;
+				SetUserName(UserName);
+				SetPassword(Password);
+				return;
+			}
+		}
+		cout << "Wrong User Name or Password\nTry Again" << endl;
+	}
+
 public:
+
+	Account()
+	{
+		OpenFile();
+
+		string Command;
+		string Password;
+
+		cout << "Hello, type in your Username -> " << endl;
+		cout << "Or if u wanna to create new Account type in: New -> ";
+
+		cin >> Command;
+
+		if (Command == "New")
+		{
+			CreateNewAccount();
+		}
+
+		cout << "Type in your password -> ";
+		cin >> Password;
+
+		this->Login(Command, Password);
+	}
 
 	bool IsFileExists()
 	{
 		Accounts.open("AccountsAndPassword.dat");
+
 		return Accounts.is_open();
 	}
 
@@ -82,35 +123,7 @@ public:
 		}
 	}
 
-	void Login()
-	{
-		string Command;
-		string DataPassword;
-
-		cout << "Hello, type in your Username -> " << endl;
-		cout << "Or if u wanna to create new Account type in: New -> ";
-		cin >> Command;
-
-		if (Command == "New")
-		{
-			CreateNewAccount();
-		}
-
-		cout << "Type in your password -> ";
-		cin >> Password;
-
-		while (getline(Accounts, DataPassword))
-		{
-			if (PasswordEncryption(Command, Password) == DataPassword)
-			{
-				cout << "Success. Welcome back" << endl;
-				SetUserName(Command);
-				SetPassword(Password);
-				return;
-			}
-		}
-		cout << "Wrong User Name or Password\nTry Again" << endl;
-	}
+	
 };
 
 void Settings(Account *User)
@@ -126,10 +139,7 @@ void Settings(Account *User)
 void main()
 {	
 	Account User;
-	//Settings(&User);
-	//User.Login();
-
-	cout << User.IsFileExists() << endl;
+	Settings(&User);
 
 	cout << User.GetUserName() << endl;
 

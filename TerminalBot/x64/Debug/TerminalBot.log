@@ -1,5 +1,4 @@
 ﻿  Source.cpp
-D:\cppProjects\TerminalBot\TerminalBot\Source.cpp(118,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\cppProjects\TerminalBot\TerminalBot\Source.cpp(127,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-  LINK : D:\cppProjects\TerminalBot\x64\Debug\TerminalBot.exe not found or not built by the last incremental link; performing full link
+D:\cppProjects\TerminalBot\TerminalBot\Source.cpp(138,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\cppProjects\TerminalBot\TerminalBot\Source.cpp(147,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
   TerminalBot.vcxproj -> D:\cppProjects\TerminalBot\x64\Debug\TerminalBot.exe
