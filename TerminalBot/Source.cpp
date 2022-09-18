@@ -29,7 +29,7 @@ public:
 
 	bool IsFileExists()
 	{
-		OpenFile();
+		Accounts.open("AccountsAndPassword.dat");
 		return Accounts.is_open();
 	}
 
@@ -126,8 +126,10 @@ void Settings(Account *User)
 void main()
 {	
 	Account User;
-	Settings(&User);
-	User.Login();
+	//Settings(&User);
+	//User.Login();
+
+	cout << User.IsFileExists() << endl;
 
 	cout << User.GetUserName() << endl;
 
